@@ -38,64 +38,40 @@ https://findkia.com
 | ![1](Images/Web/Home.png) | ![2](Images/Web/MarriageHallSearch.png) | ![3](Images/Web/RadialSearchFromLocation.png) | ![4](Images/Web/SendMessageOrChatWithServiceProvider.png) |
 
 
-# System Architecture Diagram
+System Architecture Overview – Findkia Platform
 
+# System Architecture Diagram
+```mermaid
 flowchart TD
 
-%% =========================
-%% Users Layer
-%% =========================
-Users[Users / Clients<br/>Web + Mobile Apps]
+Users[Users Clients Web Mobile Apps]
 
-%% =========================
-%% Load Balancer Layer
-%% =========================
 subgraph LB[High Availability Load Balancer Layer]
     NGINX1[NGINX Server 1]
     NGINX2[NGINX Server 2]
-    VIP[Virtual IP (Keepalived)]
-    
+    VIP[Virtual IP Keepalived]
+
     NGINX1 <--> VIP
     NGINX2 <--> VIP
 end
 
-%% =========================
-%% Web Layer
-%% =========================
-subgraph WEB[Web Application Cluster (Active-Active)]
+subgraph WEB[Web Application Cluster Active Active]
     WEB1[Web Server 1]
     WEB2[Web Server 2]
     WEB3[Web Server 3]
 end
 
-%% =========================
-%% API Layer
-%% =========================
-subgraph API[Web API Cluster (Active-Active)]
+subgraph API[Web API Cluster Active Active]
     API1[API Server 1]
     API2[API Server 2]
     API3[API Server 3]
 end
 
-%% =========================
-%% Database Layer
-%% =========================
 DB[(Cloud Database Server)]
+S3[(Cloud Object Storage S3)]
 
-%% =========================
-%% Storage Layer
-%% =========================
-S3[(Cloud Object Storage - S3)]
-
-%% =========================
-%% External Services
-%% =========================
 GMAPS[Google Maps API]
 GIMG[Google Image API]
-
-%% =========================
-%% Connections
-%% =========================
 
 Users --> VIP
 
@@ -126,13 +102,97 @@ API3 --> GMAPS
 API1 --> GIMG
 API2 --> GIMG
 API3 --> GIMG
+```
 
-%% =========================
-%% Notes
-%% =========================
-classDef cloud fill:#e3f2fd,stroke:#1e88e5,stroke-width:1px;
-class DB,S3,GMAPS,GIMG cloud;
+# High-Level Architecture – Findkia Platform
 
+## Overview
+
+The Findkia platform is designed as a large-scale, enterprise-grade system capable of supporting millions of end users and hundreds of thousands of service providers. The architecture is built with **high availability, scalability, and fault tolerance** as core principles.
+
+---
+
+## Load Balancing & High Availability Layer
+
+The system uses **two NGINX Linux servers** configured as a high-availability load balancing layer. These servers are integrated with **Keepalived** to manage a **Virtual IP (VIP)**.
+
+### Key Features
+- The Virtual IP ensures a single entry point for all incoming traffic.
+- If one NGINX server fails, the secondary server automatically takes over the VIP.
+- Eliminates single points of failure and ensures continuous availability.
+
+---
+
+## Web Application Layer
+
+The web application is hosted on a **cluster of multiple web servers** configured in an **active-active mode**.
+
+### Key Features
+- All web servers are connected to the NGINX Virtual IP.
+- Traffic is distributed across all servers for optimal performance.
+- If any server fails, others continue serving requests without disruption.
+- Supports horizontal scaling and high availability.
+
+---
+
+## API Layer
+
+Backend services are deployed on a **cluster of multiple Web API servers**, operating in an **active-active configuration**.
+
+### Key Features
+- API servers are accessed via NGINX Virtual IP.
+- Web and mobile applications consume these APIs.
+- Automatic failover ensures uninterrupted service.
+- Ensures continuous availability for all clients.
+
+---
+
+## Database Layer
+
+The database is hosted on a **cloud-based database server**.
+
+### Key Features
+- Centralized and consistent data storage.
+- Cloud-based scalability and reliability.
+- Backup and disaster recovery support.
+- Optimized for large-scale transactional workloads.
+
+---
+
+## Object Storage Layer
+
+The platform uses **cloud-based S3-compatible storage** for media and file management.
+
+### Key Features
+- Stores images and large media files.
+- Scales to millions of objects efficiently.
+- Reduces load on application and database servers.
+- Provides high durability and availability.
+
+---
+
+## External Integrations
+
+### Google Maps API
+- Location search, mapping, and tracking.
+- Geospatial features for users and service providers.
+
+### Google Image Services
+- Retrieves landmark-related images.
+- Enhances user experience with visual context.
+
+---
+
+## Key Architectural Principles
+
+- **High Availability:** No single point of failure in the system.
+- **Scalability:** Horizontal scaling across web and API layers.
+- **Fault Tolerance:** Automatic failover using Keepalived and load balancing.
+- **Cloud-Native Design:** Fully cloud-hosted infrastructure.
+- **Performance Optimization:** Distributed workloads across multiple servers.
+- **Separation of Concerns:** Independent layers for web, API, database, and storage.
+
+---
 
 One codebase ships to **web**, **Android**, and **iOS** using **Ionic 6**, **Angular 12**, and **Capacitor 4**, backed by a REST API and JWT authentication.
 
