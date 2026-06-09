@@ -1,10 +1,10 @@
 # FindKia
 
-**FindKia** is a cross-platform marketplace and booking app for discovering local service providers (SPs), comparing offerings, and completing reservations — from hotels and car rentals to activities, wedding venues, and role-specific services such as on-demand transport.
+**FindKia** is a cross-platform app, digital platform developed by Hudaz Tech and officially launched in 2022. 
 
-**FindKia** is a digital platform developed by Hudaz Tech and officially launched in 2022. The platform is designed to bridge the gap between the general public and a wide range of service providers offering services and products across multiple categories. These categories include marriage halls, restaurants, catering services, vehicles such as cars and pickups, and various other commercial and household services.
+- **The platform is designed to bridge the gap between the general public and a wide range of service providers offering services and products across multiple categories. These categories include marriage halls, restaurants, catering services, vehicles such as cars and pickups, and various other commercial and household services.
 
-**In addition, Findkia provides a convenient solution for connecting users with skilled manpower and human resources from different professions, including electricians, plumbers, mechanics, technicians, and other service specialists.
+**In addition**, Findkia provides a convenient solution for connecting users with skilled manpower and human resources from different professions, including electricians, plumbers, mechanics, technicians, and other service specialists.
 
 - **The platform enables service providers to register online through the Findkia mobile application using their registered mobile number along with National Identity Card (NIC) verification. With a highly economical registration model, businesses and individuals can market their services by creating their own dedicated mobile application pages. Service providers can easily upload their business details, service descriptions, pricing information, images, and videos to showcase their offerings professionally.
 
