@@ -16,26 +16,13 @@ https://findkia.com
 
 ## Screenshots
 
-| SideMenu Screen | Services Home Screen | Taxi Service | App Icon |
-|----------------|----------------|----------------|----------------|
-| ![1](Images/Mobile/SideMenu.jpeg) | ![2](Images/Mobile/Home.jpeg) | ![3](Images/Mobile/SpTaxiService.jpeg) | ![4](Images/Mobile/AppIcon.jpeg) |
-| Taxi Search Card View | Marriage Hall Search List View | Search Details | Service Provider Photo |
-| ![5](Images/Mobile/SearchList.jpeg) | ![6](Images/Mobile/SearchList2.jpeg) | ![7](Images/Mobile/SearchDetails.jpeg) | ![8](Images/Mobile/SpPhoto.jpeg) |
-| Share As WhatsAppAdd  | Map Taxi Hiring Plan | Trip Plan | Route Of Trip |
-| ![](Images/Mobile/ShareAsAdd.jpeg) | ![](Images/Mobile/MapTaxiHiringPlan.jpeg) | ![](Images/Mobile/TripPlan.jpeg) | ![](Images/Mobile/Routre.jpeg) |
-| Login | Signup | Help Tutorial | Help Tutorial |
-| ![](Images/Mobile/Login.jpeg) | ![](Images/Mobile/Signup.jpeg) | ![](Images/Mobile/HelpTutorial.jpeg) | ![](Images/Mobile/HelpTutorial2.jpeg) |
-| About | CompanyPolicy | Contact | Multi Language Support |
-| ![](Images/Mobile/About.jpeg) | ![](Images/Mobile/CompanyPolicy.jpeg) | ![](Images/Mobile/Contact.jpeg) | ![](Images/Mobile/HomeUrdu.jpeg) |
-
-
-
-
-## Website Screenshots
-
-| Services Home Screen | Marriage Hall Search | Radial Search From Location | Chat With Service Provider |
-|----------------|----------------|----------------|----------------|
-| ![1](Images/Web/Home.png) | ![2](Images/Web/MarriageHallSearch.png) | ![3](Images/Web/RadialSearchFromLocation.png) | ![4](Images/Web/SendMessageOrChatWithServiceProvider.png) |
+| SideMenu Screen | Services Home Screen | Taxi Service | App Icon | Taxi Search Card View | Marriage Hall Search List View | Search Details | Service Provider Photo |
+|----------------|----------------|----------------|----------------|----------------|----------------|----------------|----------------|
+| ![1](Images/Mobile/SideMenu.jpeg) | ![2](Images/Mobile/Home.jpeg) | ![3](Images/Mobile/SpTaxiService.jpeg) | ![4](Images/Mobile/AppIcon.jpeg) | ![5](Images/Mobile/SearchList.jpeg) | ![6](Images/Mobile/SearchList2.jpeg) | ![7](Images/Mobile/SearchDetails.jpeg) | ![8](Images/Mobile/SpPhoto.jpeg) |
+| Share As WhatsAppAdd  | Map Taxi Hiring Plan | Trip Plan | Route Of Trip | Login | Signup | Help Tutorial | Help Tutorial |
+| ![](Images/Mobile/ShareAsAdd.jpeg) | ![](Images/Mobile/MapTaxiHiringPlan.jpeg) | ![](Images/Mobile/TripPlan.jpeg) | ![](Images/Mobile/Routre.jpeg) | ![](Images/Mobile/Login.jpeg) | ![](Images/Mobile/Signup.jpeg) | ![](Images/Mobile/HelpTutorial.jpeg) | ![](Images/Mobile/HelpTutorial2.jpeg) |
+| About | CompanyPolicy | Contact | Multi Language Support | Services Home Screen | Marriage Hall Search | Radial Search From Location | Chat With Service Provider |
+| ![](Images/Mobile/About.jpeg) | ![](Images/Mobile/CompanyPolicy.jpeg) | ![](Images/Mobile/Contact.jpeg) | ![](Images/Mobile/HomeUrdu.jpeg) | ![1](Images/Web/Home.png) | ![2](Images/Web/MarriageHallSearch.png) | ![3](Images/Web/RadialSearchFromLocation.png) | ![4](Images/Web/SendMessageOrChatWithServiceProvider.png) |
 
 
 # System Architecture Diagram – Findkia Platform
@@ -214,40 +201,6 @@ FindKia connects **customers**, **service providers**, and **administrators** in
 | **Administrator** | Dashboard analytics, user & SP management, approvals, payment requests, image/video moderation, maps, addresses, and support chat |
 
 The app is **multi-role**: the home screen and search flows adapt based on the logged-in role (e.g. hotels, cars, activities, wedding halls, transport). Permissions are enforced server-side and reflected in the UI via JWT claims and role maps.
-
-### High-level architecture
-
-```mermaid
-flowchart TB
-  subgraph clients [Clients]
-    Web[Web PWA / Browser]
-    Android[Android App]
-    iOS[iOS App]
-  end
-
-  subgraph app [FindKia Frontend]
-    Ionic[Ionic 6 UI]
-    Angular[Angular 12 Modules]
-    Cap[Capacitor / Cordova Plugins]
-    Ionic --> Angular
-    Angular --> Cap
-  end
-
-  subgraph services [External Services]
-    API[REST API]
-    Maps[Google Maps]
-    FCM[Firebase Cloud Messaging]
-    Ads[AdMob]
-  end
-
-  Web --> app
-  Android --> app
-  iOS --> app
-  Angular --> API
-  Cap --> Maps
-  Cap --> FCM
-  Cap --> Ads
-```
 
 ### Request flow (simplified)
 
