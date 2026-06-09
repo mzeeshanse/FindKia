@@ -1,3 +1,51 @@
+
+## System Architecture Diagram
+
+```mermaid
+flowchart TB
+
+%% Clients
+A[Mobile Apps] --> LB
+B[Web App Users] --> LB
+C[Admin Panel] --> LB
+
+%% Load Balancer Layer
+LB[Nginx Load Balancer\nActive-Active Cluster] 
+VIP[(Virtual IP - Keepalived)]
+
+LB <--> VIP
+
+%% Web Layer
+VIP --> W1[Web Server 1]
+VIP --> W2[Web Server 2]
+VIP --> W3[Web Server 3]
+
+%% API Layer
+W1 --> API1[API Server 1]
+W2 --> API2[API Server 2]
+W3 --> API3[API Server 3]
+
+%% Database
+API1 --> DB[(Cloud Database)]
+API2 --> DB
+API3 --> DB
+
+%% Storage
+API1 --> S3[(Cloud S3 Storage)]
+API2 --> S3
+API3 --> S3
+
+%% External Services
+API1 --> GM[Google Maps API]
+API2 --> GM
+API3 --> GM
+
+API1 --> GI[Google Image API]
+API2 --> GI
+API3 --> GI
+```
+
+
 # FindKia 
 https://findkia.com
 
