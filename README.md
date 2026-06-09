@@ -1,51 +1,3 @@
-
-## System Architecture Diagram
-
-```mermaid
-flowchart TB
-
-%% Clients
-A[Mobile Apps] --> LB
-B[Web App Users] --> LB
-C[Admin Panel] --> LB
-
-%% Load Balancer Layer
-LB[Nginx Load Balancer\nActive-Active Cluster] 
-VIP[(Virtual IP - Keepalived)]
-
-LB <--> VIP
-
-%% Web Layer
-VIP --> W1[Web Server 1]
-VIP --> W2[Web Server 2]
-VIP --> W3[Web Server 3]
-
-%% API Layer
-W1 --> API1[API Server 1]
-W2 --> API2[API Server 2]
-W3 --> API3[API Server 3]
-
-%% Database
-API1 --> DB[(Cloud Database)]
-API2 --> DB
-API3 --> DB
-
-%% Storage
-API1 --> S3[(Cloud S3 Storage)]
-API2 --> S3
-API3 --> S3
-
-%% External Services
-API1 --> GM[Google Maps API]
-API2 --> GM
-API3 --> GM
-
-API1 --> GI[Google Image API]
-API2 --> GI
-API3 --> GI
-```
-
-
 # FindKia 
 https://findkia.com
 
@@ -86,94 +38,146 @@ https://findkia.com
 | ![1](Images/Web/Home.png) | ![2](Images/Web/MarriageHallSearch.png) | ![3](Images/Web/RadialSearchFromLocation.png) | ![4](Images/Web/SendMessageOrChatWithServiceProvider.png) |
 
 
-# Enterprise Architecture Overview
+# System Architecture Overview
 
-FindKia is designed as a cloud-based enterprise platform capable of supporting millions of users and large-scale service provider onboarding.
+The **Findkia platform** is designed as a large-scale, enterprise-grade system capable of supporting millions of end users and hundreds of thousands of service providers. The architecture is built with high availability, scalability, and fault tolerance as core principles.
 
-## System Architecture
+## High-Level Architecture Design
 
-The infrastructure is built using a multi-tier architecture focused on high availability, scalability, and continuous service operation.
+The system is deployed on a cloud-based infrastructure and follows a distributed, load-balanced architecture across multiple layers.
 
-### Load Balancer Layer
+### 1. Load Balancing & High Availability Layer
 
-Two Linux-based Nginx load balancer servers are configured in Active-Active mode with Keepalived Virtual IP (VIP) support.
+* Two **Nginx-based Linux servers** are deployed as the primary load balancers.
+* **Keepalived** is implemented to manage a **Virtual IP (VIP)** for failover and high availability.
+* In case of failure of one load balancer, the second node automatically takes over without service disruption.
 
-Features include:
+### 2. Web Application Layer
 
-* Nginx reverse proxy and load balancing
-* Virtual IP failover using Keepalived
-* High availability architecture
-* Automatic traffic failover
+* A **cluster of multiple web servers** hosts the client-facing web application.
+* All web servers operate in an **active-active configuration**.
+* Web traffic is routed through the Virtual IP (VIP), ensuring seamless failover and load distribution.
+* If any web server becomes unavailable, traffic is automatically routed to the remaining healthy servers.
 
-If one load balancer becomes unavailable, traffic is automatically redirected to the secondary server.
+### 3. API Service Layer
 
----
+* A separate **cluster of Web API servers** is deployed to handle backend services.
+* These APIs are consumed by:
 
-## Web Application Layer
+  * Web application
+  * Mobile applications (clients, service providers, administrators)
+* The API layer also operates in an **active-active configuration** behind a Virtual IP (VIP).
+* This ensures uninterrupted service even if one or more API servers fail.
 
-Multiple web servers are deployed in Active-Active mode behind the load balancer layer.
+### 4. Data Layer
 
-Responsibilities include:
+* The database system is hosted on a **cloud-managed database server** to ensure scalability, reliability, and backup management.
+* All application data is centralized and optimized for high-volume transactional operations.
 
-* Hosting the FindKia web application
-* Serving customer and service provider requests
-* Managing frontend operations
+### 5. Storage Layer
 
-If any web server becomes unavailable, remaining servers continue serving requests without interruption.
+* Static content, media files, and user uploads are stored in **cloud-based S3-compatible object storage**.
+* This ensures high durability, scalability, and global accessibility.
 
----
+### 6. External Service Integrations
 
-## API Services Layer
+The platform integrates with multiple third-party services to enhance functionality:
 
-Multiple Web API servers are deployed to handle communication between:
+* **Google Maps API**
 
-* Mobile applications
-* Web applications
-* Administrator portals
-* Service provider systems
+  * Location search
+  * Route planning
+  * Real-time tracking of service providers
 
-The API layer is designed to support high-volume concurrent requests from both mobile and web clients.
+* **Google Image API**
 
----
+  * Used to fetch and display landmark or service provider-related imagery for better user experience and identification
 
-## Cloud Infrastructure
+## Key Architectural Benefits
 
-All application servers, API servers, and database servers are hosted on cloud infrastructure.
+* Highly scalable to support millions of users
+* Zero single point of failure (SPOF) in load balancers and application layers
+* Active-active clustering for maximum availability
+* Cloud-native storage and database integration
+* Seamless integration with third-party mapping and imaging services
+* Designed for real-time, high-volume service marketplace operations
 
-The platform also integrates with S3 cloud storage for managing:
 
-* Images
-* Media files
-* Application assets
 
----
+# System Architecture Diagram
 
-## Google Services Integration
+```mermaid
+flowchart TB
 
-### Google Maps
+%% ================= LOAD BALANCER LAYER =================
+subgraph LB[Load Balancer Layer]
+    LB1[Nginx Server 1]
+    LB2[Nginx Server 2]
+    VIP[Virtual IP (Keepalived)]
+    LB1 <--> VIP
+    LB2 <--> VIP
+end
 
-Google Maps integration is used for:
+%% ================= WEB LAYER =================
+subgraph WEB[Web Application Cluster (Active-Active)]
+    W1[Web Server 1]
+    W2[Web Server 2]
+    W3[Web Server N]
+end
 
-* Vehicle tracking
-* Location search
-* Route visualization
+%% ================= API LAYER =================
+subgraph API[Web API Cluster (Active-Active)]
+    A1[API Server 1]
+    A2[API Server 2]
+    A3[API Server N]
+end
 
-### Google Image API
+%% ================= CLIENTS =================
+subgraph CLIENTS[Clients]
+    WEBAPP[Web Users]
+    MOBILE[Mobile Apps]
+    ADMIN[Admin Panel]
+end
 
-Google Image APIs are used for:
+%% ================= EXTERNAL SERVICES =================
+subgraph EXT[External Services]
+    MAPS[Google Maps API]
+    IMG[Google Image API]
+end
 
-* Landmark detection
-* Service provider location identification
+%% ================= DATA LAYER =================
+DB[(Cloud Database Server)]
+S3[(Cloud S3 Storage)]
 
----
+%% ================= FLOW =================
+WEBAPP --> VIP
+MOBILE --> VIP
+ADMIN --> VIP
 
-## Architecture Benefits
+VIP --> W1
+VIP --> W2
+VIP --> W3
 
-* High availability
-* Load balancing
-* Fault tolerance
-* Horizontal scalability
-* Cloud-based deployment
+W1 --> A1
+W2 --> A2
+W3 --> A3
+
+A1 --> DB
+A2 --> DB
+A3 --> DB
+
+A1 --> S3
+A2 --> S3
+A3 --> S3
+
+A1 --> MAPS
+A2 --> MAPS
+A3 --> MAPS
+
+A1 --> IMG
+A2 --> IMG
+A3 --> IMG
+```
 
 
 
