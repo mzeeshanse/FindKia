@@ -38,6 +38,98 @@ https://findkia.com
 | ![1](Images/Web/Home.png) | ![2](Images/Web/MarriageHallSearch.png) | ![3](Images/Web/RadialSearchFromLocation.png) | ![4](Images/Web/SendMessageOrChatWithServiceProvider.png) |
 
 
+# Enterprise Architecture Overview
+
+FindKia is designed as a cloud-based enterprise platform capable of supporting millions of users and large-scale service provider onboarding.
+
+## System Architecture
+
+The infrastructure is built using a multi-tier architecture focused on high availability, scalability, and continuous service operation.
+
+### Load Balancer Layer
+
+Two Linux-based Nginx load balancer servers are configured in Active-Active mode with Keepalived Virtual IP (VIP) support.
+
+Features include:
+
+* Nginx reverse proxy and load balancing
+* Virtual IP failover using Keepalived
+* High availability architecture
+* Automatic traffic failover
+
+If one load balancer becomes unavailable, traffic is automatically redirected to the secondary server.
+
+---
+
+## Web Application Layer
+
+Multiple web servers are deployed in Active-Active mode behind the load balancer layer.
+
+Responsibilities include:
+
+* Hosting the FindKia web application
+* Serving customer and service provider requests
+* Managing frontend operations
+
+If any web server becomes unavailable, remaining servers continue serving requests without interruption.
+
+---
+
+## API Services Layer
+
+Multiple Web API servers are deployed to handle communication between:
+
+* Mobile applications
+* Web applications
+* Administrator portals
+* Service provider systems
+
+The API layer is designed to support high-volume concurrent requests from both mobile and web clients.
+
+---
+
+## Cloud Infrastructure
+
+All application servers, API servers, and database servers are hosted on cloud infrastructure.
+
+The platform also integrates with S3 cloud storage for managing:
+
+* Images
+* Media files
+* Application assets
+
+---
+
+## Google Services Integration
+
+### Google Maps
+
+Google Maps integration is used for:
+
+* Vehicle tracking
+* Location search
+* Route visualization
+
+### Google Image API
+
+Google Image APIs are used for:
+
+* Landmark detection
+* Service provider location identification
+
+---
+
+## Architecture Benefits
+
+* High availability
+* Load balancing
+* Fault tolerance
+* Horizontal scalability
+* Cloud-based deployment
+
+
+
+
 One codebase ships to **web**, **Android**, and **iOS** using **Ionic 6**, **Angular 12**, and **Capacitor 4**, backed by a REST API and JWT authentication.
 
 | | |
