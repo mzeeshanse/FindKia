@@ -38,9 +38,7 @@ https://findkia.com
 | ![1](Images/Web/Home.png) | ![2](Images/Web/MarriageHallSearch.png) | ![3](Images/Web/RadialSearchFromLocation.png) | ![4](Images/Web/SendMessageOrChatWithServiceProvider.png) |
 
 
-System Architecture Overview – Findkia Platform
-
-# System Architecture Diagram
+# System Architecture Diagram – Findkia Platform
 ```mermaid
 flowchart TD
 
