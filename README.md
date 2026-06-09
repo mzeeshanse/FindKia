@@ -32,7 +32,7 @@
 
 ## Website Screenshots
 
-| Services Home Screen | Marriage Hall Search | RadialSearchFromLocation | SendMessageOrChatWithServiceProvider |
+| Services Home Screen | Marriage Hall Search | Radial Search From Location | Chat With Service Provider |
 |----------------|----------------|----------------|----------------|
 | ![1](Images/Web/Home.png) | ![2](Images/Web/MarriageHallSearch.png) | ![3](Images/Web/RadialSearchFromLocation.png) | ![4](Images/Web/SendMessageOrChatWithServiceProvider.png) |
 
