@@ -15,9 +15,9 @@
 
 ## Screenshots
 
-| Services Home Screen | Services Home Screen (Urdu) | Services Home Screen (Urdu) |
-|-----------|----------------|----------------|
-| ![AI-Traffic-Prediction-System](Images/Mobile/Home.jpeg) | ![AI-Traffic-Prediction-System](Images/Mobile/HomeUrdu.jpeg) | ![AI-Traffic-Prediction-System](Images/Mobile/HomeUrdu.jpeg) |
+| Services Home Screen | Services Home Screen (Urdu) | Services Home Screen (Urdu) |Services Home Screen (Urdu) |
+|-----------|----------------|----------------|----------------|
+| ![AI-Traffic-Prediction-System](Images/Mobile/Home.jpeg) | ![AI-Traffic-Prediction-System](Images/Mobile/HomeUrdu.jpeg) | ![AI-Traffic-Prediction-System](Images/Mobile/HomeUrdu.jpeg) | ![AI-Traffic-Prediction-System](Images/Mobile/HomeUrdu.jpeg) |
 
 
 
