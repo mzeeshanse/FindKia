@@ -2,6 +2,26 @@
 
 **FindKia** is a cross-platform marketplace and booking app for discovering local service providers (SPs), comparing offerings, and completing reservations — from hotels and car rentals to activities, wedding venues, and role-specific services such as on-demand transport.
 
+1
+Findkia is a digital platform developed by Hudaz Tech and officially launched in 2022. The platform is designed to bridge the gap between the general public and a wide range of service providers offering services and products across multiple categories. These categories include marriage halls, restaurants, catering services, vehicles such as cars and pickups, and various other commercial and household services.
+
+2
+In addition, Findkia provides a convenient solution for connecting users with skilled manpower and human resources from different professions, including electricians, plumbers, mechanics, technicians, and other service specialists.
+
+3
+The platform enables service providers to register online through the Findkia mobile application using their registered mobile number along with National Identity Card (NIC) verification. With a highly economical registration model, businesses and individuals can market their services by creating their own dedicated mobile application pages. Service providers can easily upload their business details, service descriptions, pricing information, images, and videos to showcase their offerings professionally.
+
+4
+Once the registration and verification process is completed and approved, the service provider’s profile becomes publicly visible on the Findkia platform. Registered providers can further promote their business by sharing their personalized page links through integrated social media sharing options available within the Findkia application. Users receiving these links can directly access the provider’s page through either the Findkia mobile application or the web platform.
+
+5
+For customers and the general public, Findkia offers a convenient and user-friendly experience to search for required services, vehicles, products, or manpower from the comfort of their homes. Users can browse detailed provider profiles, view product and service rates, examine photos and videos, access location information, and directly contact service providers using the contact details available on the platform.
+
+6
+Findkia supports multiple platforms, including Android applications, iOS applications, and web browsers, ensuring accessibility and convenience for a broad range of users across different devices.
+
+
+
 One codebase ships to **web**, **Android**, and **iOS** using **Ionic 6**, **Angular 12**, and **Capacitor 4**, backed by a REST API and JWT authentication.
 
 | | |
