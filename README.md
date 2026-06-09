@@ -17,7 +17,7 @@
 
 | Services Home Screen | Services Home Screen (Urdu) |
 |-----------|----------------|
-| ![AI-Traffic-Prediction-System](images/mobile/Home.jpg) | ![AI-Traffic-Prediction-System](images/3.png) |
+| ![AI-Traffic-Prediction-System](images/mobile/Home.jpeg) | ![AI-Traffic-Prediction-System](images/3.png) |
 | Historical Analytics | Smart City Monitoring |
 | ![AI-Traffic-Prediction-System](images/4.png) | ![AI-Traffic-Prediction-System](images/5.png) |
 | AI Model Monitoring |System Architecture |
