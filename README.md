@@ -13,6 +13,18 @@
 - Findkia supports multiple platforms, including Android applications, iOS applications, and web browsers, ensuring accessibility and convenience for a broad range of users across different devices.
 
 
+## Screenshots
+
+| Services Home Screen | Services Home Screen (Urdu) |
+|-----------|----------------|
+| ![AI-Traffic-Prediction-System](images/Home.jpg) | ![AI-Traffic-Prediction-System](images/3.png) |
+| Historical Analytics | Smart City Monitoring |
+| ![AI-Traffic-Prediction-System](images/4.png) | ![AI-Traffic-Prediction-System](images/5.png) |
+| AI Model Monitoring |System Architecture |
+| ![AI-Traffic-Prediction-System](images/6.png) | ![AI-Traffic-Prediction-System](images/7.png) |
+
+
+
 One codebase ships to **web**, **Android**, and **iOS** using **Ionic 6**, **Angular 12**, and **Capacitor 4**, backed by a REST API and JWT authentication.
 
 | | |
