@@ -38,148 +38,100 @@ https://findkia.com
 | ![1](Images/Web/Home.png) | ![2](Images/Web/MarriageHallSearch.png) | ![3](Images/Web/RadialSearchFromLocation.png) | ![4](Images/Web/SendMessageOrChatWithServiceProvider.png) |
 
 
-# System Architecture Overview
-
-The **Findkia platform** is designed as a large-scale, enterprise-grade system capable of supporting millions of end users and hundreds of thousands of service providers. The architecture is built with high availability, scalability, and fault tolerance as core principles.
-
-## High-Level Architecture Design
-
-The system is deployed on a cloud-based infrastructure and follows a distributed, load-balanced architecture across multiple layers.
-
-### 1. Load Balancing & High Availability Layer
-
-* Two **Nginx-based Linux servers** are deployed as the primary load balancers.
-* **Keepalived** is implemented to manage a **Virtual IP (VIP)** for failover and high availability.
-* In case of failure of one load balancer, the second node automatically takes over without service disruption.
-
-### 2. Web Application Layer
-
-* A **cluster of multiple web servers** hosts the client-facing web application.
-* All web servers operate in an **active-active configuration**.
-* Web traffic is routed through the Virtual IP (VIP), ensuring seamless failover and load distribution.
-* If any web server becomes unavailable, traffic is automatically routed to the remaining healthy servers.
-
-### 3. API Service Layer
-
-* A separate **cluster of Web API servers** is deployed to handle backend services.
-* These APIs are consumed by:
-
-  * Web application
-  * Mobile applications (clients, service providers, administrators)
-* The API layer also operates in an **active-active configuration** behind a Virtual IP (VIP).
-* This ensures uninterrupted service even if one or more API servers fail.
-
-### 4. Data Layer
-
-* The database system is hosted on a **cloud-managed database server** to ensure scalability, reliability, and backup management.
-* All application data is centralized and optimized for high-volume transactional operations.
-
-### 5. Storage Layer
-
-* Static content, media files, and user uploads are stored in **cloud-based S3-compatible object storage**.
-* This ensures high durability, scalability, and global accessibility.
-
-### 6. External Service Integrations
-
-The platform integrates with multiple third-party services to enhance functionality:
-
-* **Google Maps API**
-
-  * Location search
-  * Route planning
-  * Real-time tracking of service providers
-
-* **Google Image API**
-
-  * Used to fetch and display landmark or service provider-related imagery for better user experience and identification
-
-## Key Architectural Benefits
-
-* Highly scalable to support millions of users
-* Zero single point of failure (SPOF) in load balancers and application layers
-* Active-active clustering for maximum availability
-* Cloud-native storage and database integration
-* Seamless integration with third-party mapping and imaging services
-* Designed for real-time, high-volume service marketplace operations
-
-
-
 # System Architecture Diagram
 
-```mermaid
-flowchart TB
+flowchart TD
 
-%% ================= LOAD BALANCER LAYER =================
-subgraph LB[Load Balancer Layer]
-    LB1[Nginx Server 1]
-    LB2[Nginx Server 2]
+%% =========================
+%% Users Layer
+%% =========================
+Users[Users / Clients<br/>Web + Mobile Apps]
+
+%% =========================
+%% Load Balancer Layer
+%% =========================
+subgraph LB[High Availability Load Balancer Layer]
+    NGINX1[NGINX Server 1]
+    NGINX2[NGINX Server 2]
     VIP[Virtual IP (Keepalived)]
-    LB1 <--> VIP
-    LB2 <--> VIP
+    
+    NGINX1 <--> VIP
+    NGINX2 <--> VIP
 end
 
-%% ================= WEB LAYER =================
+%% =========================
+%% Web Layer
+%% =========================
 subgraph WEB[Web Application Cluster (Active-Active)]
-    W1[Web Server 1]
-    W2[Web Server 2]
-    W3[Web Server N]
+    WEB1[Web Server 1]
+    WEB2[Web Server 2]
+    WEB3[Web Server 3]
 end
 
-%% ================= API LAYER =================
+%% =========================
+%% API Layer
+%% =========================
 subgraph API[Web API Cluster (Active-Active)]
-    A1[API Server 1]
-    A2[API Server 2]
-    A3[API Server N]
+    API1[API Server 1]
+    API2[API Server 2]
+    API3[API Server 3]
 end
 
-%% ================= CLIENTS =================
-subgraph CLIENTS[Clients]
-    WEBAPP[Web Users]
-    MOBILE[Mobile Apps]
-    ADMIN[Admin Panel]
-end
-
-%% ================= EXTERNAL SERVICES =================
-subgraph EXT[External Services]
-    MAPS[Google Maps API]
-    IMG[Google Image API]
-end
-
-%% ================= DATA LAYER =================
+%% =========================
+%% Database Layer
+%% =========================
 DB[(Cloud Database Server)]
-S3[(Cloud S3 Storage)]
 
-%% ================= FLOW =================
-WEBAPP --> VIP
-MOBILE --> VIP
-ADMIN --> VIP
+%% =========================
+%% Storage Layer
+%% =========================
+S3[(Cloud Object Storage - S3)]
 
-VIP --> W1
-VIP --> W2
-VIP --> W3
+%% =========================
+%% External Services
+%% =========================
+GMAPS[Google Maps API]
+GIMG[Google Image API]
 
-W1 --> A1
-W2 --> A2
-W3 --> A3
+%% =========================
+%% Connections
+%% =========================
 
-A1 --> DB
-A2 --> DB
-A3 --> DB
+Users --> VIP
 
-A1 --> S3
-A2 --> S3
-A3 --> S3
+VIP --> WEB1
+VIP --> WEB2
+VIP --> WEB3
 
-A1 --> MAPS
-A2 --> MAPS
-A3 --> MAPS
+VIP --> API1
+VIP --> API2
+VIP --> API3
 
-A1 --> IMG
-A2 --> IMG
-A3 --> IMG
-```
+WEB1 --> API1
+WEB2 --> API2
+WEB3 --> API3
 
+API1 --> DB
+API2 --> DB
+API3 --> DB
 
+API1 --> S3
+API2 --> S3
+API3 --> S3
+
+API1 --> GMAPS
+API2 --> GMAPS
+API3 --> GMAPS
+
+API1 --> GIMG
+API2 --> GIMG
+API3 --> GIMG
+
+%% =========================
+%% Notes
+%% =========================
+classDef cloud fill:#e3f2fd,stroke:#1e88e5,stroke-width:1px;
+class DB,S3,GMAPS,GIMG cloud;
 
 
 One codebase ships to **web**, **Android**, and **iOS** using **Ionic 6**, **Angular 12**, and **Capacitor 4**, backed by a REST API and JWT authentication.
